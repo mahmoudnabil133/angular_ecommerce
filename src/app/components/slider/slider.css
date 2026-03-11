@@ -1,0 +1,10 @@
+.slider-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ensure images cover area and don't distort */
+.carousel-item img {
+  object-fit: cover;
+  max-height: 400px;
+}
