@@ -1,5 +1,37 @@
+<!-- 
 
-<div class="container mt-5">
+<h2>select a category to show</h2>
+<select name="" id="" [(ngModel)]="selectedCatId" (change)="filterProducts()">
+    <option value="0">all</option>
+    <option value="1">electo</option>
+    <option value="2">lab</option>
+    <option value="3">phone</option>
+</select>
+<input type="text" value="ali" [(ngModel)]="selectedCatId">
+<p>{{selectedCatId}}</p> -->
+
+<div class="container">
+    <div class="row mt-5">
+        @for (item of products; track $index) {
+            <div class="col-md-3">
+                <div class="card">
+                    <img [src]="item.imageUrl" class="card-img-top" alt="productImag">
+                    <div class="card-body ">
+                        <h5 class="card-title" [ngClass]="item.inStock ? 'text-danger' : 'text-success'">{{item.name}}</h5>
+                        <p class="card-text">{{item.description}}</p>
+                        <p [ngClass]="item.price > 100 ? 'text-danger' : 'text-success'">
+                        {{item.price}}
+                        </p>
+                        <button [disabled]="item.inStock"> buy</button>        
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+<!-- <div class="container mt-5">
     <h2 class="text-center mb-4">Products</h2>
     <div class="row">
         <div class="col-sm-6 col-md-4 mb-4" *ngFor="let product of products">
@@ -14,4 +46,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

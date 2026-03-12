@@ -5,4 +5,5 @@ export interface IProduct{
     description: string;
     imageUrl: string;
     catId:number;
+    inStock?:boolean
 }

@@ -26,6 +26,8 @@ import { FormsModule} from '@angular/forms';
 export class Product {
  products: IProduct[];
  categories:any[];
+ selectedProducts: IProduct[]=[]
+
  selectedPrice:number=0;
  selectedCatId:number=0;
 
@@ -38,7 +40,8 @@ export class Product {
         price: 15000,
         description: 'High performance laptop',
         imageUrl: 'https://picsum.photos/200/200?random=1',
-        catId:1
+        catId:1,
+        inStock:true
       },
       {
         id: 2,
@@ -46,23 +49,26 @@ export class Product {
         price: 8000, 
         description: 'Latest smartphone',
         imageUrl: 'https://picsum.photos/200/200?random=4',
-        catId:1
+        catId:1,
+        inStock: true
       },
       {
         id: 3,
         name: 'Headphones',
-        price: 1200,
+        price: 80,
         description: 'Noise cancelling headphones',
         imageUrl: 'https://picsum.photos/200/200?random=100',
-        catId:2
+        catId:2,
+        inStock: false
       },
       {
         id: 4,
         name: 'Monitor',
-        price: 5000,
+        price: 70,
         description: '4K Ultra HD monitor',
         imageUrl: 'https://picsum.photos/200/200?random=8',
-        catId:1
+        catId:1,
+        inStock: false
       },
       {
         id: 5,
@@ -70,7 +76,8 @@ export class Product {
         price: 300,
         description: 'Mechanical keyboard',
         imageUrl: 'https://picsum.photos/200/200?random=12',
-        catId:2
+        catId:2,
+        inStock:true
       },
       {
         id: 6,
@@ -78,7 +85,8 @@ export class Product {
         price: 150,
         description: 'Wireless mouse',
         imageUrl: 'https://picsum.photos/200/200?random=16',
-        catId:2
+        catId:2,
+        inStock:true
       }
     ]
     this.categories =[
@@ -90,5 +98,9 @@ export class Product {
 
   buy(price:number){
     this.selectedPrice=price;
+  }
+
+  filterProducts(){
+    this.selectedProducts = this.selectedCatId == 0? this.products : this.products.filter(p=>p.catId = this.selectedCatId)
   }
 }
