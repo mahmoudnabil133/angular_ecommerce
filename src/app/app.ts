@@ -7,10 +7,11 @@ import { Contact } from './components/contact/contact';
 import { Notfound } from './components/notfound/notfound';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { NgModel } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
-  imports: [Header, Footer, Product, Slider, Contact, Notfound, RouterOutlet, RouterModule],
+  imports: [Header, Footer, Product, Slider, Contact, Notfound, RouterOutlet, RouterModule, HttpClientModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

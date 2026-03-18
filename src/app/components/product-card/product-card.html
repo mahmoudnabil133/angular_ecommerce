@@ -1,0 +1,22 @@
+
+<div class="card h-100 shadow-sm">
+
+    <!-- Image -->
+    <ng-content select="img"></ng-content>
+
+    <div class="card-body text-center">
+
+        <!-- Title -->
+        <ng-content select="h5"></ng-content>
+
+        <!-- Content (price + stock) -->
+        <ng-content select="p"></ng-content>
+
+    </div>
+
+    <!-- Actions (buttons) -->
+    <div class="card-footer d-flex justify-content-between">
+        <ng-content select=".actions"></ng-content>
+    </div>
+
+</div>

@@ -1,37 +1,30 @@
-<!-- 
-
-<h2>select a category to show</h2>
+<!-- <h2>select a category to show</h2>
 <select name="" id="" [(ngModel)]="selectedCatId" (change)="filterProducts()">
     <option value="0">all</option>
     <option value="1">electo</option>
     <option value="2">lab</option>
     <option value="3">phone</option>
 </select>
-<input type="text" value="ali" [(ngModel)]="selectedCatId">
 <p>{{selectedCatId}}</p> -->
+<!-- <input type="text" value="ali" [(ngModel)]="selectedCatId"> -->
 
-<div class="container">
-    <div class="row mt-5">
+<!-- <div class="container">
+    <div class="row">
         @for (item of products; track $index) {
             <div class="col-md-3">
-                <div class="card">
+                <app-product-card>
                     <img [src]="item.imageUrl" class="card-img-top" alt="productImag">
-                    <div class="card-body ">
-                        <h5 class="card-title" [ngClass]="item.inStock ? 'text-danger' : 'text-success'">{{item.name}}</h5>
-                        <p class="card-text">{{item.description}}</p>
-                        <p [ngClass]="item.price > 100 ? 'text-danger' : 'text-success'">
-                        {{item.price}}
-                        </p>
-                        <button [disabled]="item.inStock"> buy</button>        
-                    </div>
-                </div>
+                    <h5>{{item.name}}</h5>
+                    <p>{{item.description}}</p>
+                </app-product-card>
             </div>
         }
     </div>
 
-</div>
+</div> -->
 
-<!-- <div class="container mt-5">
+<!-- 
+<div class="container mt-5">
     <h2 class="text-center mb-4">Products</h2>
     <div class="row">
         <div class="col-sm-6 col-md-4 mb-4" *ngFor="let product of products">
@@ -47,3 +40,44 @@
         </div>
     </div>
 </div> -->
+
+<div class="container">
+    <div class="d-flex justify-content-end mb-3"> 
+        <button class="btn btn-success" routerLink="/create-product">+Create Product</button>
+    </div>
+    <div class="row">
+        @for (item of products; track item.id) {
+            <div class="col-md-3 mb-4">
+                <app-product-card>
+                    <img 
+                        [src]="item.image || 'https://i.pinimg.com/1200x/34/6e/7a/346e7ac45123572b94af0843a37a19d9.jpg'" 
+                        class="card-img-top" 
+                        alt="productImage"
+                    >
+    
+                    <h5>{{item.name}}</h5>
+    
+                    <p>Price: {{item.price}}</p>
+                    <p>Stock: {{item.inStock}}</p>
+    
+                    <div class="actions">
+                        <button 
+                            class="btn btn-primary btn-sm"
+                            [routerLink]="['/update-product', item.id]"
+                        >
+                            Edit
+                        </button>
+    
+                        <button 
+                            class="btn btn-danger btn-sm"
+                            (click)="deleteProduct(item.id)"
+                        >
+                            Delete
+                        </button>
+                </div>
+    
+                </app-product-card>        
+            </div>
+        }
+    </div>
+</div>

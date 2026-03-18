@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import { IProduct } from '../../models/IProduct';
 import { identifierName } from '@angular/compiler';
 import { FormsModule} from '@angular/forms';
+import { ProductService } from '../../services/product-service';
+import { ProductCard } from '../product-card/product-card';
+import { RouterLink } from "@angular/router";
 /* binding
   1) interpolation
     from controller(x.ts) ==> to view(x.html) {{prod.name}}
@@ -19,88 +22,62 @@ import { FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-product',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ProductCard, RouterLink],
   templateUrl: './product.html',
   styleUrl: './product.css',
 })
-export class Product {
- products: IProduct[];
- categories:any[];
- selectedProducts: IProduct[]=[]
-
- selectedPrice:number=0;
- selectedCatId:number=0;
-
-
-  constructor(){
-    this.products = [
-      {
-        id: 1,
-        name: 'Laptop',
-        price: 15000,
-        description: 'High performance laptop',
-        imageUrl: 'https://picsum.photos/200/200?random=1',
-        catId:1,
-        inStock:true
-      },
-      {
-        id: 2,
-        name: 'Phone',
-        price: 8000, 
-        description: 'Latest smartphone',
-        imageUrl: 'https://picsum.photos/200/200?random=4',
-        catId:1,
-        inStock: true
-      },
-      {
-        id: 3,
-        name: 'Headphones',
-        price: 80,
-        description: 'Noise cancelling headphones',
-        imageUrl: 'https://picsum.photos/200/200?random=100',
-        catId:2,
-        inStock: false
-      },
-      {
-        id: 4,
-        name: 'Monitor',
-        price: 70,
-        description: '4K Ultra HD monitor',
-        imageUrl: 'https://picsum.photos/200/200?random=8',
-        catId:1,
-        inStock: false
-      },
-      {
-        id: 5,
-        name: 'Keyboard',
-        price: 300,
-        description: 'Mechanical keyboard',
-        imageUrl: 'https://picsum.photos/200/200?random=12',
-        catId:2,
-        inStock:true
-      },
-      {
-        id: 6,
-        name: 'Mouse',
-        price: 150,
-        description: 'Wireless mouse',
-        imageUrl: 'https://picsum.photos/200/200?random=16',
-        catId:2,
-        inStock:true
-      }
-    ]
+export class Product implements OnInit {
+  products?: IProduct[];
+  categories:any[];
+  selectedProducts?: IProduct[]=[]
+  
+  selectedPrice:number=0;
+  selectedCatId:number=0;
+  
+  
+  constructor(private productService: ProductService, private cd:ChangeDetectorRef){
     this.categories =[
       {id:1, name:"electo"},
       {id:2, name:"lab"},
       {id:3, name:"phone"}
     ] 
+  } 
+  ngOnInit(){
+    this.getAll()
   }
+  getAll(){
+    this.productService.getAll().subscribe({
+      next:res=>{
+      this.products = res
+      this.cd.detectChanges();
+      }
+    })
+  }
+  deleteProduct(id:string){
+    const confirmDelete = confirm("Are you sure?")
+    if (!confirmDelete) return;
+    this.productService.delete(id).subscribe({
+      next:()=>this.getAll(),
+      error: err=>console.log(err)
+    });
+  }
+  // ngAfterViewInit(): void {
+  //   console.log('after init view init, now component is  loaded');
+  // }
+  // ngOnChanges(changes: SimpleChanges): void {
+  //     console.log(changes);
+      
+  // }
+  // ngOnDestroy(): void {
+  //     console.log('destroy, now component is destroyed');
+      
+  // }
+  
+  // buy(price:number){
+  //   this.selectedPrice=price;
+  // }
 
-  buy(price:number){
-    this.selectedPrice=price;
-  }
-
-  filterProducts(){
-    this.selectedProducts = this.selectedCatId == 0? this.products : this.products.filter(p=>p.catId = this.selectedCatId)
-  }
+  // filterProducts(){
+  //   this.selectedProducts = this.selectedCatId == 0? this.products : this.products?.filter(p=>p.catId = this.selectedCatId)
+  // }
 }
