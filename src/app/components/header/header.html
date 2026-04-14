@@ -1,43 +1,38 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" [routerLink]="'/home'">MyApp</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/home'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/products'" routerLinkActive="active">Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/contact'" routerLinkActive="active">Contact</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            More
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="'/something1'">Action</a></li>
-            <li><a class="dropdown-item" [routerLink]="'/something2'">Another Action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" [routerLink]="'/something3'">Something else here</a></li>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand fw-bold" routerLink="/">🛒 ShopApp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/products" routerLinkActive="active">Products</a>
+            </li>
+            <li class="nav-item" *ngIf="auth.isLoggedIn()">
+              <a class="nav-link" routerLink="/cart" routerLinkActive="active">🛍️ Cart</a>
+            </li>
+            <li class="nav-item dropdown" *ngIf="auth.isAdmin()">
+              <button class="nav-link dropdown-toggle btn btn-link text-decoration-none p-0 border-0" type="button" data-bs-toggle="dropdown">
+                Admin
+              </button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" routerLink="/admin/products">Products</a></li>
+                <li><a class="dropdown-item" routerLink="/admin/categories">Categories</a></li>
+              </ul>
+            </li>
           </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-
-    </div>
-  </div>
-</nav>
+          <ul class="navbar-nav ms-auto">
+            <ng-container *ngIf="!auth.isLoggedIn(); else loggedIn">
+              <li class="nav-item"><a class="nav-link" routerLink="/login">Login</a></li>
+              <li class="nav-item"><a class="nav-link" routerLink="/register">Register</a></li>
+            </ng-container>
+            <ng-template #loggedIn>
+              <li class="nav-item">
+                <button class="btn btn-outline-light btn-sm mt-1" (click)="logout()">Logout</button>
+              </li>
+            </ng-template>
+          </ul>
+        </div>
+      </div>
+    </nav>

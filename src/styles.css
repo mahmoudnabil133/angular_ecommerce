@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+/* Prevent layout jump when modal opens */
+body { padding-right: 0 !important; overflow-x: hidden; }
+
+/* Active nav link in admin sidebar */
+.router-link-active.nav-link { background-color: rgba(255,255,255,0.1); }
+
+/* Card hover lift */
+.card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important; }
+
+/* Sticky navbar */
+.navbar { position: sticky; top: 0; z-index: 1030; }
+
+/* Make modal overlay cover full screen properly */
+.modal.d-block { position: fixed; inset: 0; z-index: 1055; overflow-y: auto; }

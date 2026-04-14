@@ -1,0 +1,26 @@
+   <a routerLink="/products" class="btn btn-outline-secondary btn-sm mb-3">← Back</a>
+
+    <div *ngIf="loading" class="text-center py-5"><div class="spinner-border"></div></div>
+    <div *ngIf="!loading && errorMessage" class="alert alert-warning">{{ errorMessage }}</div>
+    <div *ngIf="!loading && product" class="row g-4">
+      <div class="col-md-5">
+        <img [src]="product.image || 'https://picsum.photos/500/400?random=99'"
+          class="img-fluid rounded shadow" [alt]="product.name">
+      </div>
+      <div class="col-md-7">
+        <h2>{{ product.name }}</h2>
+        <p class="text-muted">Category: {{ product.categoryId?.name || '—' }}</p>
+        <h4 class="text-dark">EGP {{ product.price | number }}</h4>
+        <span class="badge mb-3" [class.bg-success]="product.inStock > 0" [class.bg-danger]="product.inStock === 0">
+          {{ product.inStock > 0 ? 'In Stock (' + product.inStock + ')' : 'Out of Stock' }}
+        </span>
+        <p *ngIf="product.description">{{ product.description }}</p>
+        <button class="btn btn-dark mt-2" *ngIf="auth.isLoggedIn() && product.inStock > 0"
+          (click)="addToCart()" [disabled]="adding">
+          <span *ngIf="adding" class="spinner-border spinner-border-sm me-1"></span>
+          Add to Cart
+        </button>
+        <div class="alert alert-success mt-2" *ngIf="added">Added to cart!</div>
+        <a routerLink="/login" class="btn btn-outline-dark mt-2" *ngIf="!auth.isLoggedIn()">Login to buy</a>
+      </div>
+    </div>

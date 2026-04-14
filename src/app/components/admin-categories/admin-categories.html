@@ -1,0 +1,45 @@
+<div class="modal d-block bg-dark bg-opacity-50" *ngIf="showModal">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">{{ editId ? 'Edit' : 'Create' }} Category</h5>
+        <button class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+        <div class="alert alert-danger" *ngIf="formError">{{ formError }}</div>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input class="form-control" formControlName="name"
+                [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched">
+            <div class="invalid-feedback">Name required.</div>
+            </div>
+            <button class="btn btn-dark w-100" type="submit" [disabled]="saving">
+            <span *ngIf="saving" class="spinner-border spinner-border-sm me-1"></span>
+            {{ editId ? 'Update' : 'Create' }}
+            </button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div *ngIf="loading" class="text-center py-5"><div class="spinner-border"></div></div>
+
+<div class="table-responsive" *ngIf="!loading">
+    <table class="table table-hover">
+    <thead class="table-dark">
+        <tr><th>Name</th><th>ID</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let c of categories">
+        <td>{{ c.name }}</td>
+        <td><small class="text-muted">{{ c._id }}</small></td>
+        <td>
+            <button class="btn btn-outline-secondary btn-sm me-1" (click)="openEdit(c)">Edit</button>
+            <button class="btn btn-outline-danger btn-sm" (click)="delete(c._id)">Delete</button>
+        </td>
+        </tr>
+    </tbody>
+    </table>
+</div>

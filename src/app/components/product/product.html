@@ -42,11 +42,8 @@
 </div> -->
 
 <div class="container">
-    <div class="d-flex justify-content-end mb-3"> 
-        <button class="btn btn-success" routerLink="/create-product">+Create Product</button>
-    </div>
     <div class="row">
-        @for (item of products; track item.id) {
+        @for (item of products; track productId(item)) {
             <div class="col-md-3 mb-4">
                 <app-product-card>
                     <img 
@@ -61,20 +58,8 @@
                     <p>Stock: {{item.inStock}}</p>
     
                     <div class="actions">
-                        <button 
-                            class="btn btn-primary btn-sm"
-                            [routerLink]="['/update-product', item.id]"
-                        >
-                            Edit
-                        </button>
-    
-                        <button 
-                            class="btn btn-danger btn-sm"
-                            (click)="deleteProduct(item.id)"
-                        >
-                            Delete
-                        </button>
-                </div>
+                        <button class="btn btn-outline-dark btn-sm w-100" type="button" (click)="goToDetails(item)">View details</button>
+                    </div>
     
                 </app-product-card>        
             </div>
